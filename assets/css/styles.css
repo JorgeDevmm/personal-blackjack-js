@@ -1,0 +1,108 @@
+:root {
+  --colorMesa: #054805;
+  --colorBorderMesa: #903b0c;
+  --fuentePrincipal: 'Playfair Display', serif;
+  --colorBlack: #000000;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1rem -10px */
+  background-color: var(--colorBlack);
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  background-color: var(--colorBorderMesa);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  font-family: var(--fuentePrincipal);
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3.6rem;
+  }
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.8rem;
+  }
+}
+
+.main {
+  height: 45rem;
+  background-color: var(--colorMesa);
+}
+
+@media (min-width: 768px) {
+  .main {
+    height: 70rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .jugador {
+    height: 30rem;
+  }
+}
+
+/* cartas */
+.carta {
+  position: relative;
+  width: 10rem;
+  left: 4rem;
+  margin-left: -75px;
+}
+
+@media (min-width: 768px) {
+  .carta {
+    position: relative;
+    width: 12rem;
+    left: 0;
+    margin-left: -5px;
+    transform-origin: bottom bottom;
+  }
+}
+
+@media (min-width: 768px) {
+  .carta:nth-child(1) {
+    transform: rotate(-30deg) translateY(50px);
+  }
+  .carta:nth-child(2) {
+    transform: rotate(-20deg) translateY(20px);
+  }
+  .carta:nth-child(3) {
+    transform: rotate(10deg) translateY(20px);
+  }
+  .carta:nth-child(4) {
+    transform: rotate(30deg) translateY(50px);
+  }
+}
+
+.computadora-contenido {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  #jugador-cartas {
+    height: 20rem;
+  }
+}
+
+@media (min-width: 768px) {
+  #computadora-cartas {
+    height: 20rem;
+  }
+}
