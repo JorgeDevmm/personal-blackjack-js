@@ -9,6 +9,7 @@ let deck = [];
 const tipos = ['C', 'D', 'H', 'S'];
 const especiales = ['A', 'J', 'Q', 'K'];
 
+// Esta función crea una nueva baraja
 const crearDeck = () => {
   // llena al deck cartas+tipo
   for (let i = 2; i <= 10; i++) {
@@ -24,15 +25,27 @@ const crearDeck = () => {
     }
   }
 
-  console.log(deck);
-
   deck = deck.sort(comparacion);
-
-  console.log(deck);
+  return deck;
 };
 
+// función para utilizar como parametro para numero aleatorios sort
 const comparacion = () => {
   return Math.random() - 0.5;
 };
 
 crearDeck();
+
+// Función me permite tormar una carta
+
+const pedirCarta = () => {
+  if (deck.length === 0) {
+    throw `No hay cartas en el deck`;
+  }
+
+  cartaObtenida = deck.pop();
+
+  return cartaObtenida;
+};
+
+pedirCarta();
