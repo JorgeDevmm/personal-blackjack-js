@@ -15,6 +15,7 @@ let puntosJugador = 0,
 
 // Referencia HTML
 const jugadorMostrarPuntaje = document.querySelectorAll('small');
+const mostrarCartasJugador = document.querySelector('#jugador-cartas');
 
 const btnPedir = document.querySelector('#btnPedir');
 const btnNuevo = document.querySelector('#btnNuevo');
@@ -87,4 +88,18 @@ btnPedir.addEventListener('click', () => {
 
   // mostrar los puntajes acumulador del jugador en pantalla
   jugadorMostrarPuntaje[0].innerText = puntosJugador;
+
+  // creamos la imagen de la carta
+  const imagen = document.createElement('img');
+  imagen.classList.add('carta');
+  imagen.src = `assets/cartas/${cartaObtenida}.png`;
+
+  mostrarCartasJugador.append(imagen);
+
+  if (puntosJugador > 21) {
+    console.log('perdiste');
+    btnPedir.disabled = true;
+  } else if (puntosJugador === 21) {
+    console.log('genial');
+  }
 });

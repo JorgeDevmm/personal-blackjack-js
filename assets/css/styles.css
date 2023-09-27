@@ -96,13 +96,9 @@ h2 {
 }
 
 @media (min-width: 768px) {
-  #jugador-cartas {
-    height: 20rem;
-  }
-}
-
-@media (min-width: 768px) {
+  #jugador-cartas,
   #computadora-cartas {
     height: 20rem;
+    width: 48rem;
   }
 }
