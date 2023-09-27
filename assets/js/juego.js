@@ -37,15 +37,34 @@ const comparacion = () => {
 crearDeck();
 
 // Función me permite tormar una carta
-
 const pedirCarta = () => {
   if (deck.length === 0) {
     throw `No hay cartas en el deck`;
   }
 
-  cartaObtenida = deck.pop();
+  // obtenemos la ultima carta y la quitamos del array original
+  let ultimaCarta = deck.pop();
 
-  return cartaObtenida;
+  return ultimaCarta;
 };
 
-pedirCarta();
+let cartaObtenida = pedirCarta();
+
+// función valor carta, pasando la carta obtenida
+const valorCarta = (carta) => {
+  // obteneos el el primer hasta la ultima posición menos uno para 10D
+  const valor = carta.substring(0, carta.length - 1);
+
+  // ejecución resumida
+  return isNaN(valor)
+    ? // cuando sea letra podremos condicionarlo el puntaje
+      valor == 'A'
+      ? 11
+      : 10
+    : // para convertir la variable tipo string en número
+      valor * 1;
+};
+
+const valor = valorCarta(cartaObtenida);
+
+console.log(valor);
