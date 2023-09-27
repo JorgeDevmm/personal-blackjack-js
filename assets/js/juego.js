@@ -9,6 +9,17 @@ let deck = [];
 const tipos = ['C', 'D', 'H', 'S'];
 const especiales = ['A', 'J', 'Q', 'K'];
 
+// puntajes
+let puntosJugador = 0,
+  puntosComputadora = 0;
+
+// Referencia HTML
+const jugadorMostrarPuntaje = document.querySelectorAll('small');
+
+const btnPedir = document.querySelector('#btnPedir');
+const btnNuevo = document.querySelector('#btnNuevo');
+const btnDetener = document.querySelector('#btnDetener');
+
 // Esta función crea una nueva baraja
 const crearDeck = () => {
   // llena al deck cartas+tipo
@@ -48,8 +59,6 @@ const pedirCarta = () => {
   return ultimaCarta;
 };
 
-let cartaObtenida = pedirCarta();
-
 // función valor carta, pasando la carta obtenida
 const valorCarta = (carta) => {
   // obteneos el el primer hasta la ultima posición menos uno para 10D
@@ -65,6 +74,17 @@ const valorCarta = (carta) => {
       valor * 1;
 };
 
-const valor = valorCarta(cartaObtenida);
+// const valor = valorCarta(cartaObtenida);
 
-console.log(valor);
+// console.log(valor);
+
+// Eventos
+btnPedir.addEventListener('click', () => {
+  let cartaObtenida = pedirCarta();
+
+  // acumulamos el puntaje variable global
+  puntosJugador += valorCarta(cartaObtenida);
+
+  // mostrar los puntajes acumulador del jugador en pantalla
+  jugadorMostrarPuntaje[0].innerText = puntosJugador;
+});
