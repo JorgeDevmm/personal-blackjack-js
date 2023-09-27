@@ -89,6 +89,9 @@ h2 {
   .carta:nth-child(4) {
     transform: rotate(30deg) translateY(50px);
   }
+  .carta:nth-child(5) {
+    transform: rotate(-30deg) translateY(50px);
+  }
 }
 
 .computadora-contenido {

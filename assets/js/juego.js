@@ -101,6 +101,22 @@ const turnoComputadora = (puntosMinimos) => {
 
     // condiciamos para que no exceda a 21 y que sea menor que el jugador
   } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+
+  setTimeout(() => {
+    if (puntosMinimos === puntosComputadora) {
+      alert('Empate!!');
+    } else if (
+      (puntosMinimos > puntosComputadora && puntosMinimos <= 21) ||
+      puntosComputadora > 21
+    ) {
+      alert('GANA JUGADOR!!!');
+    } else if (
+      (puntosMinimos < puntosComputadora && puntosComputadora <= 21) ||
+      puntosMinimos > 21
+    ) {
+      alert('GANA COMPUTADORA!!!');
+    }
+  }, 1000);
 };
 
 // Eventos
@@ -121,21 +137,15 @@ btnPedir.addEventListener('click', () => {
   mostrarCartasJugador.append(imagen);
 
   if (puntosJugador > 21) {
-    console.log('perdiste');
     btnPedir.disabled = true;
     btnDetener.disabled = true;
 
-    setTimeout(() => {
-      turnoComputadora(puntosJugador);
-    }, 1500);
+    turnoComputadora(puntosJugador);
   } else if (puntosJugador === 21) {
-    console.log('genial');
-    btnDetener.disabled = true;
+    btnPedir.disabled = true;
     btnDetener.disabled = true;
 
-    setTimeout(() => {
-      turnoComputadora(puntosJugador);
-    }, 1500);
+    turnoComputadora(puntosJugador);
   }
 });
 
@@ -144,7 +154,31 @@ btnDetener.addEventListener('click', () => {
   btnPedir.disabled = true;
   btnDetener.disabled = true;
 
-  setTimeout(() => {
-    turnoComputadora(puntosJugador);
-  }, 1500);
+  turnoComputadora(puntosJugador);
+});
+
+// evento nuevo juego
+btnNuevo.addEventListener('click', () => {
+  console.clear();
+  // limpiamos el deck
+  deck = [];
+
+  // creamos de nuevo el deck
+  deck = crearDeck();
+
+  // activamos los botonos
+  btnPedir.disabled = false;
+  btnDetener.disabled = false;
+
+  // reseteo puntajes
+  puntosComputadora = 0;
+  puntosJugador = 0;
+
+  // elimimo puntaje visual
+  jugadorMostrarPuntaje[0].innerText = 0;
+  jugadorMostrarPuntaje[1].innerText = 0;
+
+  // elimino cartas visual
+  mostrarCartasJugador.innerHTML = '';
+  mostrarCartasComputador.innerHTML = '';
 });
