@@ -16,6 +16,7 @@ let puntosJugador = 0,
 // Referencia HTML
 const jugadorMostrarPuntaje = document.querySelectorAll('small');
 const mostrarCartasJugador = document.querySelector('#jugador-cartas');
+const mostrarCartasComputador = document.querySelector('#computadora-cartas');
 
 const btnPedir = document.querySelector('#btnPedir');
 const btnNuevo = document.querySelector('#btnNuevo');
@@ -75,13 +76,36 @@ const valorCarta = (carta) => {
       valor * 1;
 };
 
-// const valor = valorCarta(cartaObtenida);
+// Turno de la computadora
+const turnoComputadora = (puntosMinimos) => {
+  do {
+    const cartaObtenida = pedirCarta();
 
-// console.log(valor);
+    // acumulamos el puntaje variable global
+    puntosComputadora += valorCarta(cartaObtenida);
+
+    // mostrar los puntajes acumulador del jugador en pantalla
+    jugadorMostrarPuntaje[1].innerText = puntosComputadora;
+
+    // creamos la imagen de la carta
+    const imagen = document.createElement('img');
+    imagen.classList.add('carta');
+    imagen.src = `assets/cartas/${cartaObtenida}.png`;
+
+    mostrarCartasComputador.append(imagen);
+
+    // validamos que si puntos minimos es mayor a 21, la computadora gana y solo necesita hacer una vuelta
+    if (puntosMinimos > 21) {
+      break;
+    }
+
+    // condiciamos para que no exceda a 21 y que sea menor que el jugador
+  } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+};
 
 // Eventos
 btnPedir.addEventListener('click', () => {
-  let cartaObtenida = pedirCarta();
+  const cartaObtenida = pedirCarta();
 
   // acumulamos el puntaje variable global
   puntosJugador += valorCarta(cartaObtenida);
@@ -99,7 +123,28 @@ btnPedir.addEventListener('click', () => {
   if (puntosJugador > 21) {
     console.log('perdiste');
     btnPedir.disabled = true;
+    btnDetener.disabled = true;
+
+    setTimeout(() => {
+      turnoComputadora(puntosJugador);
+    }, 1500);
   } else if (puntosJugador === 21) {
     console.log('genial');
+    btnDetener.disabled = true;
+    btnDetener.disabled = true;
+
+    setTimeout(() => {
+      turnoComputadora(puntosJugador);
+    }, 1500);
   }
+});
+
+// evento detener
+btnDetener.addEventListener('click', () => {
+  btnPedir.disabled = true;
+  btnDetener.disabled = true;
+
+  setTimeout(() => {
+    turnoComputadora(puntosJugador);
+  }, 1500);
 });
