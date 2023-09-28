@@ -73,6 +73,9 @@ h2 {
     left: 0;
     margin-left: -5px;
     transform-origin: bottom bottom;
+    transition-property: all;
+    transition-duration: 3000s;
+    transition-timing-function: ease-in-out;
   }
 }
 
@@ -104,4 +107,10 @@ h2 {
     height: 20rem;
     width: 48rem;
   }
+}
+
+.contenedor-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

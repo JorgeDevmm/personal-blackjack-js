@@ -22,6 +22,9 @@ const btnPedir = document.querySelector('#btnPedir');
 const btnNuevo = document.querySelector('#btnNuevo');
 const btnDetener = document.querySelector('#btnDetener');
 
+const modalElemento = document.querySelector('.modal');
+const modalMensaje = document.querySelector('.modal-mensaje');
+
 // Esta función crea una nueva baraja
 const crearDeck = () => {
   // llena al deck cartas+tipo
@@ -103,18 +106,23 @@ const turnoComputadora = (puntosMinimos) => {
   } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
 
   setTimeout(() => {
+    // const modalElemento = document.querySelector('.modal');
+
+    // document.body.append(modalElemento);
+
     if (puntosMinimos === puntosComputadora) {
-      alert('Empate!!');
+      mostrarModal('EMPATE!!');
     } else if (
       (puntosMinimos > puntosComputadora && puntosMinimos <= 21) ||
       puntosComputadora > 21
     ) {
-      alert('GANA JUGADOR!!!');
+      mostrarModal('GANA JUGADOR');
     } else if (
       (puntosMinimos < puntosComputadora && puntosComputadora <= 21) ||
       puntosMinimos > 21
     ) {
-      alert('GANA COMPUTADORA!!!');
+      mostrarModal('GANA COMPUTADORA');
+      // alert('GANA COMPUTADORA!!!');
     }
   }, 1000);
 };
@@ -131,8 +139,9 @@ btnPedir.addEventListener('click', () => {
 
   // creamos la imagen de la carta
   const imagen = document.createElement('img');
-  imagen.classList.add('carta');
+
   imagen.src = `assets/cartas/${cartaObtenida}.png`;
+  imagen.classList.add('carta');
 
   mostrarCartasJugador.append(imagen);
 
@@ -182,3 +191,16 @@ btnNuevo.addEventListener('click', () => {
   mostrarCartasJugador.innerHTML = '';
   mostrarCartasComputador.innerHTML = '';
 });
+
+// función mensaje y mostrar modal
+const mostrarModal = (mensaje) => {
+  // quitar lo oculto del modal
+  modalElemento.classList.remove('d-none');
+  modalElemento.removeAttribute('aria-hidden');
+
+  modalMensaje.innerText = mensaje;
+
+  // mostrar modal
+  const modal = new bootstrap.Modal(modalElemento);
+  modal.show();
+};
