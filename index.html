@@ -21,12 +21,15 @@
 
     <title>BlackJack</title>
   </head>
-  <body class="border border-1 rounded rounded-5 rounded-pill rounded-top-0">
-    <header class="bg-black text-white text-center py-4">
-      <h1 class="title">BlackJack</h1>
+  <body
+    class="border border-1 rounded rounded-5 rounded-pill rounded-top-0 d-flex flex-column min-vh-100"
+  >
+    <header class="bg-black text-white text-center header">
+      <img class="header-logo" src="assets/cartas/logo.png" alt="logo" />
+      <h1 class="header-title">BlackJack</h1>
     </header>
 
-    <div class="row mt-5">
+    <div class="mt-5">
       <div id="botones" class="col text-center">
         <button id="btnNuevo" type="button" class="btn btn-danger fs-3 fw-bold">
           Nuevo Juego
@@ -49,7 +52,7 @@
     </div>
 
     <main
-      class="main my-5 mx-5 py-md-2 border border-white border-2 rounded rounded-5 rounded-pill rounded-top-0"
+      class="main mt-5 mx-5 py-md-2 border border-white border-2 rounded rounded-5 rounded-pill rounded-top-0 flex-grow-1"
     >
       <div class="jugador row my-md-5">
         <div class="col text-white d-flex flex-column align-items-center">
@@ -112,4 +115,10 @@
       crossorigin="anonymous"
     ></script>
   </body>
+
+  <footer class="footer">
+    <p class="text-white text-center mb-0 p-2">
+      Realizado por Jorge Luis Monzón Morales
+    </p>
+  </footer>
 </html>

@@ -23,11 +23,16 @@ body {
 }
 
 h1 {
-  font-size: 2.8rem;
+  font-size: 3.8rem;
 }
+
+h1::first-letter {
+  color: red;
+}
+
 @media (min-width: 768px) {
   h1 {
-    font-size: 3.6rem;
+    font-size: 4.6rem;
   }
 }
 
@@ -38,6 +43,30 @@ h2 {
 @media (min-width: 768px) {
   h2 {
     font-size: 2.8rem;
+  }
+}
+
+.header {
+  position: relative;
+  padding: 0;
+  min-height: 5rem;
+}
+
+.header-logo {
+  width: 10rem;
+  padding: 0;
+  object-fit: cover;
+}
+.header-title {
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  right: 0;
+}
+
+@media (min-width: 768px) {
+  .header-title {
+    top: 4rem;
   }
 }
 
@@ -93,12 +122,18 @@ h2 {
     transform: rotate(30deg) translateY(50px);
   }
   .carta:nth-child(5) {
-    transform: rotate(-30deg) translateY(50px);
+    transform: rotate(-30deg) translateY(-75px) translateX(75px);
   }
 }
 
 .computadora-contenido {
   position: relative;
+}
+
+#jugador-cartas,
+#computadora-cartas {
+  height: 16rem;
+  width: 20rem;
 }
 
 @media (min-width: 768px) {
@@ -113,4 +148,13 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    background-color: transparent;
+  }
+  .footer p {
+    background-color: transparent;
+  }
 }
