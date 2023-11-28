@@ -19,9 +19,8 @@
 
   // TODO  Referencia HTML
 
-  const jugadorMostrarPuntaje = document.querySelectorAll('small');
-  const mostrarCartasJugador = document.querySelector('#jugador-cartas');
-  const mostrarCartasComputador = document.querySelector('#computadora-cartas');
+  const puntosHTML = document.querySelectorAll('small');
+  const divCartasJugadores = document.querySelectorAll('.divCartas');
 
   const btnPedir = document.querySelector('#btnPedir');
   const btnNuevo = document.querySelector('#btnNuevo');
@@ -36,12 +35,13 @@
   const inicializarJuego = (numeroJugadores = 1) => {
     deck = crearDeck();
 
-    // inicializamos nuestros jugadores
-    for (let i = 0; i < puntosJugadores; i++){
-      puntosJugadores.push(0)
-    }
+    // Asegúrate de limpiar los puntosJugadores solo al inicio del juego
+    puntosJugadores = [];
 
-    console.log(puntosJugadores);
+    // inicializamos nuestros jugadores
+    for (let i = 0; i < numeroJugadores; i++) {
+      puntosJugadores.push(0);
+    }
   };
 
   // Esta función crea una nueva baraja
@@ -94,30 +94,38 @@
         valor * 1;
   };
 
-  const acumularPuntos = () => {
-    deck = crearDeck;
-    // // acumulamos el puntaje variable global
-    // puntosComputadora += valorCarta(cartaObtenida);
-    // // mostrar los puntajes acumulador del jugador en pantalla
-    // jugadorMostrarPuntaje[1].innerText = puntosComputadora;
+  // acumulación puntos de jugador o computadora,Turno 0 = jugador, ultimo computadora
+  const acumularPuntos = (carta, turno) => {
+    puntosJugadores[turno] += valorCarta(carta);
+    // mostrar los puntajes acumulador del jugador en pantalla
+    puntosHTML[turno].innerText = puntosJugadores[turno];
+
+    return puntosJugadores[turno];
+  };
+
+  // Crear la carta en el html
+  const crearCarta = (carta, turno) => {
+    // creamos la imagen de la carta,ruta,clase y agregamos al div contenedor
+    const imagen = document.createElement('img');
+    imagen.src = `assets/cartas/${carta}.png`;
+    imagen.classList.add('carta');
+    divCartasJugadores[turno].append(imagen);
   };
 
   // Turno de la computadora
   const turnoComputadora = (puntosMinimos) => {
+    let puntosComputadora = 0;
+
+    console.log({ puntosJugadores });
     do {
       const cartaObtenida = pedirCarta();
 
-      // acumulamos el puntaje variable global
-      puntosComputadora += valorCarta(cartaObtenida);
-      // mostrar los puntajes acumulador del jugador en pantalla
-      jugadorMostrarPuntaje[1].innerText = puntosComputadora;
+      puntosComputadora = acumularPuntos(
+        cartaObtenida,
+        puntosJugadores.length - 1
+      );
 
-      // creamos la imagen de la carta
-      const imagen = document.createElement('img');
-      imagen.classList.add('carta');
-      imagen.src = `assets/cartas/${cartaObtenida}.png`;
-
-      mostrarCartasComputador.append(imagen);
+      crearCarta(cartaObtenida, puntosJugadores.length - 1);
 
       // validamos que si puntos minimos es mayor a 21, la computadora gana y solo necesita hacer una vuelta
       if (puntosMinimos > 21) {
@@ -165,19 +173,9 @@
   //TODO Eventos
   btnPedir.addEventListener('click', () => {
     const cartaObtenida = pedirCarta();
+    const puntosJugador = acumularPuntos(cartaObtenida, 0);
 
-    // acumulamos el puntaje variable global
-    puntosJugador += valorCarta(cartaObtenida);
-    // mostrar los puntajes acumulador del jugador en pantalla
-    jugadorMostrarPuntaje[0].innerText = puntosJugador;
-
-    // creamos la imagen de la carta
-    const imagen = document.createElement('img');
-
-    imagen.src = `assets/cartas/${cartaObtenida}.png`;
-    imagen.classList.add('carta');
-
-    mostrarCartasJugador.append(imagen);
+    crearCarta(cartaObtenida, 0);
 
     if (puntosJugador > 21) {
       btnPedir.disabled = true;
@@ -216,16 +214,16 @@
     btnPedir.disabled = false;
     btnDetener.disabled = false;
 
-    // reseteo puntajes
-    puntosComputadora = 0;
-    puntosJugador = 0;
+    // reseteo puntajes de posiciones de jugadores
+    puntosJugadores[0] = 0;
+    puntosJugadores[1] = 0;
 
-    // elimimo puntaje visual
-    jugadorMostrarPuntaje[0].innerText = 0;
-    jugadorMostrarPuntaje[1].innerText = 0;
+    // elimimo puntaje visual del html
+    puntosHTML[0].innerText = 0;
+    puntosHTML[1].innerText = 0;
 
-    // elimino cartas visual
-    mostrarCartasJugador.innerHTML = '';
-    mostrarCartasComputador.innerHTML = '';
+    // elimino cartas visual dle html
+    divCartasJugadores[0].innerHTML = '';
+    divCartasJugadores[1].innerHTML = '';
   });
 })();
