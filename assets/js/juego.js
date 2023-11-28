@@ -1,5 +1,5 @@
 // Patrón módulo
-(() => {
+const miJuego = (() => {
   ('use strict');
   /**
    * 2C= two of clubs(trebol)
@@ -42,6 +42,20 @@
     for (let i = 0; i < numeroJugadores; i++) {
       puntosJugadores.push(0);
     }
+
+    // activamos los botonos
+    btnPedir.disabled = false;
+    btnDetener.disabled = false;
+
+    // reseteo puntajes de posiciones de jugadores
+    puntosJugadores[0] = 0;
+    puntosJugadores[1] = 0;
+
+    // elimimo puntaje visual de cada elemento del html
+    puntosHTML.forEach((elem) => (elem.innerText = 0));
+
+    // elimino cartas visual de cada elemento del html
+    divCartasJugadores.forEach((elem) => (elem.innerText = ''));
   };
 
   // Esta función crea una nueva baraja
@@ -112,34 +126,11 @@
     divCartasJugadores[turno].append(imagen);
   };
 
-  // Turno de la computadora
-  const turnoComputadora = (puntosMinimos) => {
-    let puntosComputadora = 0;
-
-    console.log({ puntosJugadores });
-    do {
-      const cartaObtenida = pedirCarta();
-
-      puntosComputadora = acumularPuntos(
-        cartaObtenida,
-        puntosJugadores.length - 1
-      );
-
-      crearCarta(cartaObtenida, puntosJugadores.length - 1);
-
-      // validamos que si puntos minimos es mayor a 21, la computadora gana y solo necesita hacer una vuelta
-      if (puntosMinimos > 21) {
-        break;
-      }
-
-      // condiciamos para que no exceda a 21 y que sea menor que el jugador
-    } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+  // Función para definir mostrando un modal quien gana, empata, o pierde
+  const determinarGanador = () => {
+    const [puntosMinimos, puntosComputadora] = puntosJugadores;
 
     setTimeout(() => {
-      // const modalElemento = document.querySelector('.modal');
-
-      // document.body.append(modalElemento);
-
       if (puntosMinimos === puntosComputadora) {
         mostrarModal('EMPATE!!');
       } else if (
@@ -157,6 +148,24 @@
     }, 1000);
   };
 
+  // Turno de la computadora
+  const turnoComputadora = (puntosMinimos) => {
+    let puntosComputadora = 0;
+
+    do {
+      const cartaObtenida = pedirCarta();
+      puntosComputadora = acumularPuntos(
+        cartaObtenida,
+        puntosJugadores.length - 1
+      );
+      crearCarta(cartaObtenida, puntosJugadores.length - 1);
+
+      // condiciamos para que no exceda a 21 y que sea menor que el jugador
+    } while (puntosComputadora < puntosMinimos && puntosMinimos <= 21);
+
+    determinarGanador();
+  };
+
   // función mensaje y mostrar modal
   const mostrarModal = (mensaje) => {
     // quitar lo oculto del modal
@@ -170,24 +179,28 @@
     modal.show();
   };
 
+  // activar botono y desactivar de acuerdo a la acción
+  const gestionarBontonesActivos = () => {
+    if (puntosJugadores[0] > 21) {
+      btnPedir.disabled = true;
+      btnDetener.disabled = true;
+
+      turnoComputadora(puntosJugadores[0]);
+    } else if (puntosJugadores[0] === 21) {
+      btnPedir.disabled = true;
+      btnDetener.disabled = true;
+
+      turnoComputadora(puntosJugadores[0]);
+    }
+  };
+
   //TODO Eventos
   btnPedir.addEventListener('click', () => {
     const cartaObtenida = pedirCarta();
     const puntosJugador = acumularPuntos(cartaObtenida, 0);
 
     crearCarta(cartaObtenida, 0);
-
-    if (puntosJugador > 21) {
-      btnPedir.disabled = true;
-      btnDetener.disabled = true;
-
-      turnoComputadora(puntosJugador);
-    } else if (puntosJugador === 21) {
-      btnPedir.disabled = true;
-      btnDetener.disabled = true;
-
-      turnoComputadora(puntosJugador);
-    }
+    gestionarBontonesActivos();
   });
 
   // evento detener
@@ -195,7 +208,8 @@
     btnPedir.disabled = true;
     btnDetener.disabled = true;
 
-    turnoComputadora(puntosJugador);
+    // inicia la acción del turno de computadora, tras detener
+    turnoComputadora(puntosJugadores[0]);
   });
 
   // evento nuevo juego
@@ -203,27 +217,7 @@
     // console.clear();
 
     inicializarJuego();
-
-    // // limpiamos el deck
-    // deck = [];
-
-    // // creamos de nuevo el deck
-    // deck = crearDeck();
-
-    // activamos los botonos
-    btnPedir.disabled = false;
-    btnDetener.disabled = false;
-
-    // reseteo puntajes de posiciones de jugadores
-    puntosJugadores[0] = 0;
-    puntosJugadores[1] = 0;
-
-    // elimimo puntaje visual del html
-    puntosHTML[0].innerText = 0;
-    puntosHTML[1].innerText = 0;
-
-    // elimino cartas visual dle html
-    divCartasJugadores[0].innerHTML = '';
-    divCartasJugadores[1].innerHTML = '';
   });
+
+  return `Empezando el juego`;
 })();
